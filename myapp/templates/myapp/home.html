@@ -1,0 +1,216 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block head %}
+<title>Dashboard</title>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+<div class="chart-container">
+	<div class="c-wrapper">
+		<canvas id="myCountry" class="canvas"></canvas>
+		<canvas id="CnRl" class="canvas"></canvas>
+	</div>
+	<div class="c-wrapper">
+		<canvas id="CnLh" class="canvas"></canvas>
+		<canvas id="CnIn" class="canvas"></canvas>
+	</div>
+</div>
+<div class="tl-container">
+	<ol>
+		{% for dat in page_list %}
+		<li><a href="#">{{dat.title}}</a></li>
+		{% endfor %}
+	</ol>
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+	// This function gives the average value to the sum of the elements of an array
+
+	function getAvr(data){
+		let total = 0;
+		for (let i =0; i<data.length; i++){
+			total += data[i] 
+		}
+		let totalAvr = (total/data.length).toFixed(2);
+		return totalAvr;
+	}
+
+	const other = 
+	[
+		{% for p in c_c %}
+			{% if p.c < 10 %} 
+				{{p.c}},
+			{% endif %}
+		{% endfor %}
+	]
+
+	let other_c = 0;
+
+	for (let i = 0; i < other.length; i++){
+		other_c += other[i];
+	}
+	const rel = 
+	[
+		{% for av in c_r %}
+			{% if av.con < 10 %} 
+				{{av.avr}},
+			{% endif %}
+		{% endfor %}
+	]
+
+	const avrRelavance = getAvr(rel);
+
+	// Chart of number of counts of country
+	const myCn = document.getElementById('myCountry');
+
+	new Chart(myCn, {
+		type: 'bar',
+		data: {
+			labels: [
+				{% for p in c_c %}
+					{% if p.c >= 10 %}
+						'{{p.country}}',
+					{% endif %}
+				{% endfor %}
+				'Others'
+				],
+			datasets: [{
+				label:'Votes',
+				data: [
+					{% for p in c_c %}
+						{% if p.c >= 10 %}
+							{{p.c}},
+						{% endif %}
+					{% endfor %}
+					other_c
+					],
+				backgroundColor:
+				['red','green','yellow','brown','pink','blue','gray','purple','skyblue'],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			}
+		}
+	});
+
+// Chart of relevance
+	const avrRel = document.getElementById("CnRl");
+	new Chart(avrRel, {
+		type: 'doughnut',
+		data: {
+			labels: [
+				{% for av in c_r %}
+					{% if av.con >= 10 %} 
+						'{{av.country}}',
+					{% endif %}
+				{% endfor %}
+				'Others'
+				],
+			datasets: [{
+				label:'Relevance',
+				data: [
+					{% for av in c_r %}
+						{% if av.con >= 10 %} 
+							({{av.avr}}).toFixed(2),
+						{% endif %}
+					{% endfor %}
+					avrRelavance
+					],
+				backgroundColor:
+				['red','green','yellow','brown','pink','blue','gray','purple','skyblue'],
+				hoverOffset: 10
+			}]
+		}
+	});
+
+// Pie Chart of Likelyhood
+	const intensity = [
+		{% for avp in c_i %}
+			{% if avp.c < 5 %}
+				 {{avp.avr}},
+			{% endif %}
+		{% endfor %}
+	];
+	const oth_in = getAvr(intensity);
+	const CnIn = document.getElementById("CnIn");
+	new Chart(CnIn, {
+		type: 'pie',
+		data: {
+			labels: [
+				{% for avp in c_i %}
+					{% if avp.avr >= 10 and avp.c >= 5 %}
+						'{{avp.country}}',
+					{% endif %}
+				{% endfor %}
+				'Others'
+				],
+			datasets: [{
+				label:'Intensity',
+				data: [
+					{% for avp in c_i %}
+						{% if avp.avr >= 10 and avp.c >= 5 %}
+							{{avp.avr}}.toFixed(2),
+						{% endif %}
+					{% endfor %}
+					oth_in
+					],
+				hoverOffset: 10
+			}]
+		}
+	});
+
+// Likelihood graph
+	const avrLike = document.getElementById("CnLh");
+	const likelihood = 
+	[
+		{% for av in c_l %}
+			{% if av.c < 5 %}
+				{{av.avr}},
+			{% endif %}
+		{% endfor %}
+	];
+	const avrLikelihood = getAvr(likelihood);
+	console.log(avrLikelihood);
+	new Chart(avrLike, {
+		type: 'bar',
+		data: {
+			labels: [
+				{% for av in c_l %}
+					{% if av.c > 5 and av.avr >= 3 %}
+						'{{av.country}}',
+					{% endif %}
+				{% endfor %}
+				'Others'
+				],
+			datasets: [{
+				label:'Likelihood',
+				data: [
+					{% for av in c_l %}
+						{% if av.c > 5 and av.avr >= 3 %}
+							{{av.avr }},
+						{% endif %}
+					{% endfor %}
+					avrLikelihood
+					],
+				backgroundColor:
+				['red','green','yellow','brown','pink','blue','gray','purple','skyblue'],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			}
+		}
+	});
+</script>
+{% endblock %}

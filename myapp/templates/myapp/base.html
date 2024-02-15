@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	{% block head %}
+	{% endblock %}
+</head>
+<body>
+	<nav class="nav">
+		<a href="#">Coffer</a>
+	</nav>
+	<main class="main">
+		{% block content %}
+		{% endblock %}
+	</main>
+	<footer class="footer">
+		<p>A website by <a href="#">Dhiman Chakma</a></p>
+	</footer>
+	{% block js %}
+	{% endblock %}
+</body>
+</html>

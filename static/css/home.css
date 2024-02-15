@@ -1,0 +1,12 @@
+.chart-container{
+	width: 90%;
+	margin-inline: auto;
+}
+.c-wrapper{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+.canvas{
+	width: 100% !important;
+	height: auto !important;
+}

@@ -1,9 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import myModel
 import json
 from datetime import datetime
 from django.db.models import Count,Avg
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from myapp.forms import InsightForm
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 def home(request):
 
@@ -24,8 +30,8 @@ def home(request):
         avr=Avg('likelihood')
         )
 
-    data = myModel.objects.all().order_by("?")
-    paginate = Paginator(data, 20)
+    data = myModel.objects.all()
+    paginate = Paginator(data, 10)
     page_number = request.GET.get("page")
     page_list = paginate.get_page(page_number)
     context={
@@ -36,3 +42,48 @@ def home(request):
         "page_list":page_list,
     }
     return render(request, 'myapp/home.html', context)
+
+def detailview(request, pk):
+    post = get_object_or_404(myModel, pk=pk)
+
+    previous_post = myModel.objects.filter(pk__lt=post.pk).order_by('-pk').first()
+
+    next_post = myModel.objects.filter(pk__gt=post.pk).order_by('pk').first()
+    context = {
+        'post':post,
+        'previous_post_url': reverse('detail', args=[previous_post.pk]) if previous_post else None,
+        'next_post_url': reverse('detail', args=[next_post.pk]) if next_post else None,
+    }
+    return render(request, 'myapp/detail.html', context)
+
+def logview(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                messages.error(request, "Username and Password does not match")
+        return render(request, 'myapp/login.html')
+    else:
+        return redirect("/")
+
+def register(request):
+    return render(request, 'myapp/register.html')
+
+def modelform(request):
+    if request.method == "POST":
+        form = InsightForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            messages.error(request, "Oops! Something went wrong")
+    else:
+        form = InsightForm()
+    context = {
+        'form':form,
+    }
+    return render(request, "myapp/form.html", context)

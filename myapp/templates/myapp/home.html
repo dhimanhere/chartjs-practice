@@ -23,21 +23,33 @@
 </div>
 <div class="tl-container">
 	<h2>Insights</h2>
-	<ol>
+	<ol class="infinite-container">
 		{% for dat in page_list %}
-		<li><a href="#">{{dat.title}}</a></li>
+		<li class="infinite-item">
+			<a href="{% url 'detail' dat.pk %}">{{dat.title}}</a>
+		</li>
 		{% endfor %}
 	</ol>
 </div>
+{% if page_list.has_next %}
 <div class="paginate-container">
+	<a href="?page={{ page_list.next_page_number }}" style="display: none;" class="infinite-more-link">next</a>
 	<div class="paginate">
 		<div class="pg"></div>
 		<div class="pg"></div>
 		<div class="pg"></div>
 	</div>
 </div>
+{% endif %}
 {% endblock %}
 {% block js %}
+
+{% if page_list.has_next %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'js/infinite.min.js' %}"></script>
+	<script src="{% static 'js/pagination.js' %}"></script>
+{% endif %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 	// This function gives the average value to the sum of the elements of an array

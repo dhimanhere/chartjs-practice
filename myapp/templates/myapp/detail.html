@@ -1,0 +1,71 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block head %}
+<title>{{post.title}}</title>
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+{% block content %}
+<div class="p-container">
+	<h1>{{post.title}}</h1>
+	<div class="p-wrapper">
+		<div class="content">
+			<p><strong>Topic: </strong>{% if post.topic %}{{post.topic}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Sector: </strong>{% if post.sector %}{{post.sector}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Insight: </strong>{% if post.insight %}{{post.insight}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Region: </strong>{% if post.region %}{{post.region}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Country: </strong>{% if post.country %}{{post.country}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Pestle: </strong>{% if post.pestle %}{{post.pestle}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Url: </strong>{% if post.url %} <a href="{{post.url}}" target="_blank">{{post.url}}</a> {% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Impact: </strong>{% if post.impact %}{{post.impact}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Relevance: </strong>{% if post.relevance %}{{post.relevance}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Likelihood: </strong>{% if post.likelihood %}{{post.likelihood}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Intensity: </strong>{% if post.intensity %}{{post.intensity}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Start Year: </strong>{% if post.start_year %}{{post.start_year}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>End Year: </strong>{% if post.end_year %}{{post.end_year}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Added: </strong>{% if post.added %}{{post.added}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Published: </strong>{% if post.published %}{{post.published}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+		<div class="content">
+			<p><strong>Source: </strong>{% if post.source %}{{post.source}}{% else %} <span class="nota">Unavailable</span> {% endif %}</p>
+		</div>
+	</div>
+</div>
+<div class="p-n-container">
+	<ul>
+		{% if previous_post_url %}
+		<li><a href="{{ previous_post_url }}">Previous</a></li>
+		{% endif %}
+		{% if next_post_url %}
+		<li><a href="{{ next_post_url }}">Next</a></li>
+		{% endif %}
+	</ul>
+</div>
+{% endblock %}

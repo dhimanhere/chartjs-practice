@@ -6,21 +6,35 @@
 {% endblock %}
 {% block content %}
 <div class="chart-container">
-	<div class="c-wrapper">
-		<canvas id="myCountry" class="canvas"></canvas>
-		<canvas id="CnRl" class="canvas"></canvas>
+	<div class="c-container">
+		<h2>Countries</h2>
+		<div class="c-wrapper first">
+			<canvas id="myCountry" class="canvas"></canvas>
+			<canvas id="CnRl" class="canvas"></canvas>
+		</div>
 	</div>
-	<div class="c-wrapper">
-		<canvas id="CnLh" class="canvas"></canvas>
-		<canvas id="CnIn" class="canvas"></canvas>
+	<div class="c-container">
+		<h2>Others</h2>
+		<div class="c-wrapper second">
+			<canvas id="CnLh" class="canvas"></canvas>
+			<canvas id="CnIn" class="canvas"></canvas>
+		</div>
 	</div>
 </div>
 <div class="tl-container">
+	<h2>Insights</h2>
 	<ol>
 		{% for dat in page_list %}
 		<li><a href="#">{{dat.title}}</a></li>
 		{% endfor %}
 	</ol>
+</div>
+<div class="paginate-container">
+	<div class="paginate">
+		<div class="pg"></div>
+		<div class="pg"></div>
+		<div class="pg"></div>
+	</div>
 </div>
 {% endblock %}
 {% block js %}
@@ -92,6 +106,7 @@
 			}]
 		},
 		options: {
+			responsive: true,
 			scales: {
 				y: {
 					beginAtZero: true
@@ -127,6 +142,9 @@
 				['red','green','yellow','brown','pink','blue','gray','purple','skyblue'],
 				hoverOffset: 10
 			}]
+		},
+		options: {
+			responsive: true,
 		}
 	});
 
@@ -163,6 +181,9 @@
 					],
 				hoverOffset: 10
 			}]
+		},
+		options: {
+			responsive: true,
 		}
 	});
 
@@ -205,6 +226,7 @@
 			}]
 		},
 		options: {
+			responsive: true,
 			scales: {
 				y: {
 					beginAtZero: true

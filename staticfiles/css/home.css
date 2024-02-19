@@ -1,0 +1,99 @@
+.chart-container{
+	width: 90%;
+	margin-inline: auto;
+}
+.c-wrapper{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+.canvas{
+	width: 100% !important;
+	height: auto !important;
+}
+.c-container{
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border-radius: 1rem;
+	padding: 0.5rem;
+}
+.c-container>h2, .tl-container>h2{
+	font-family: "Playfair Display", serif;
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+.c-container:first-child{
+	margin-bottom: 1rem;
+}
+.tl-container{
+	width: 90%;
+	max-width: 55rem;
+	margin-inline: auto;
+	margin-top: 1rem;
+}
+.tl-container>ol{
+	margin-top: 0.5rem;
+	padding: 1rem;
+	padding-left: 2rem;
+	display: grid;
+	grid-gap: 0.5rem;
+}
+.tl-container>ol>li>a{
+	text-decoration: none;
+	color: black;
+	font-family: "Poppins", sans-serif;
+	font-size: 0.875rem;
+}
+.tl-container>ol>li>a:hover{
+	text-decoration: underline;
+}
+.paginate{
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+.pg{
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: black;
+}
+.pg:first-child{
+	opacity: 0;
+	animation: pg1 1s infinite;
+}
+.pg:nth-child(2){
+	opacity: 0;
+	animation: pg2 1s infinite;
+	animation-delay: 100ms;
+}
+.pg:last-child{
+	opacity: 0;
+	animation: pg3 1s infinite;
+	animation-delay: 200ms;
+}
+@keyframes pg1{
+	from{
+		opacity: 0;
+	}to{
+		opacity: 1;
+	}
+}
+@keyframes pg2{
+	from{
+		opacity: 0;
+	}to{
+		opacity: 1;
+	}
+}
+@keyframes pg3{
+	from{
+		opacity: 0;
+	}to{
+		opacity: 1;
+	}
+}
+@media(max-width: 630px){
+	.c-wrapper{
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,54 @@
+.form-container{
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+	padding: 1rem;
+	width: 90%;
+	max-width: 30rem;
+	margin-inline: auto;
+	border-radius: 1rem;
+}
+.form-container>h1{
+	text-align: center;
+	font-family: "Playfair Display", serif;
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+.form-in{
+	display: grid;
+	grid-gap: 1rem;
+}
+.form-in>p>label{
+	display: block;
+	margin-bottom: 0.5rem;
+	font-family: "Poppins", sans-serif;
+	cursor: pointer;
+	font-size: 0.875rem;
+}
+.form-in>p>input, .form-in>p>textarea{
+	font-family: "Poppins", sans-serif;
+	width: 100%;
+	padding: 5px;
+	border: 0;
+	outline: 0;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+	font-size: 0.75rem;
+}
+.form>button{
+	font-family: "Poppins", sans-serif;
+	padding: 3px 1rem;
+	margin-top: 1rem;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	border:0;
+	font-size: 0.75rem;
+}
+.messages{
+	list-style: none;
+	border: 1px solid red;
+	margin: 0.5rem 0;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	font-family: "Poppins", sans-serif;
+	font-size: 0.75rem;
+	color: red;
+}

@@ -1,0 +1,27 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block head %}
+<title>Form</title>
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+{% block content %}
+<div class="form-container">
+	<h1>Model Form</h1>
+	<div class="form-wrapper">
+		{% if messages %}
+		<ul class="messages">
+			{% for m in messages %}
+			<li>{{m}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<form method="post" class="form">
+			{% csrf_token %}
+			<div class="form-in">
+				{{form.as_p}}
+			</div>
+			<button type="submit">Publish</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

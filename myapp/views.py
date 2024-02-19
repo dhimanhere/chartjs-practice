@@ -5,11 +5,12 @@ from datetime import datetime
 from django.db.models import Count,Avg
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from myapp.forms import InsightForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 def home(request):
 
@@ -30,7 +31,7 @@ def home(request):
         avr=Avg('likelihood')
         )
 
-    data = myModel.objects.all()
+    data = myModel.objects.all().order_by("pk")
     paginate = Paginator(data, 10)
     page_number = request.GET.get("page")
     page_list = paginate.get_page(page_number)
@@ -58,22 +59,28 @@ def detailview(request, pk):
 
 def logview(request):
     if request.user.is_authenticated:
+        return redirect("/")
+    else:
         if request.method == "POST":
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                next_url = request.POST.get('next', '')
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    return redirect("/")
             else:
                 messages.error(request, "Username and Password does not match")
         return render(request, 'myapp/login.html')
-    else:
-        return redirect("/")
 
-def register(request):
-    return render(request, 'myapp/register.html')
+def lg(request):
+    logout(request)
+    return redirect("/")
 
+@login_required(login_url = "/login/")
 def modelform(request):
     if request.method == "POST":
         form = InsightForm(request.POST)
